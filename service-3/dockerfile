@@ -1,4 +1,4 @@
-FROM alpine:3.13 as tzdata
+FROM alpine:3.18 as tzdata
 RUN apk --no-cache add tzdata
 
 FROM golang:1.23.4-alpine
