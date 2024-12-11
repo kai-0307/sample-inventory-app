@@ -59,7 +59,7 @@ http://localhost:8080/api/service-3/
 ## ディレクトリ構成の説明
 
 ```
-LOCAL-MICROSERVICE/
+microservice-architecture-demo/
 ├── conf/
 │   └── localhost/               # Nginxの設定などが入る（ルーティングやプロキシ設定）
 ├── service-1/
