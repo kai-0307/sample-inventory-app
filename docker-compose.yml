@@ -1,0 +1,46 @@
+x-common: &common
+  working_dir: /go/src/microservice
+  tty: true
+  expose:
+    - 8080
+  command: sh -c "go run main.go"
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./conf:/etc/nginx/vhost.d
+    depends_on:
+      - service-a
+      - service-b
+      - service-c
+
+  termination:
+    image: containous/whoami
+    platform: linux/amd64 # プラットフォームを指定
+    environment:
+      - VIRTUAL_HOST=localhost
+
+  service-a:
+    <<: *common
+    build:
+      context: "./service-1"
+    volumes:
+      - ./service-a:/go/src/microservice
+
+  service-b:
+    <<: *common
+    build:
+      context: "./service-2"
+    volumes:
+      - ./service-b:/go/src/microservice
+
+  service-c:
+    <<: *common
+    build:
+      context: "./service-3"
+    volumes:
+      - ./service-c:/go/src/microservice
