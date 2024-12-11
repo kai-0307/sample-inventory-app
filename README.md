@@ -22,8 +22,8 @@ docker system prune
 
 ```
 cd service-a
-docker build -t service-a .
-docker run -p 8080:8080 service-a
+docker build -t service-1 .
+docker run -p 8080:8080 service-1
 ```
 
 ```
@@ -46,13 +46,13 @@ docker-compose ps
 ## アクセス
 
 ```
-▼ サービスA
+▼ サービス1
 http://localhost:8080/api/service-1/
 
-▼ サービスB
+▼ サービス2
 http://localhost:8080/api/service-2/
 
-▼ サービスC
+▼ サービス3
 http://localhost:8080/api/service-3/
 ```
 
@@ -63,14 +63,14 @@ LOCAL-MICROSERVICE/
 ├── conf/
 │   └── localhost/               # Nginxの設定などが入る（ルーティングやプロキシ設定）
 ├── service-1/
-│   ├── dockerfile               # service-aのDockerイメージを作成するためのファイル
-│   └── main.go                  # service-aのアプリケーションコード
+│   ├── dockerfile               # service-1のDockerイメージを作成するためのファイル
+│   └── main.go                  # service-1のアプリケーションコード
 ├── service-2/
-│   ├── dockerfile               # service-bのDockerイメージを作成するためのファイル
-│   └── main.go                  # service-bのアプリケーションコード
+│   ├── dockerfile               # service-2のDockerイメージを作成するためのファイル
+│   └── main.go                  # service-2のアプリケーションコード
 ├── service-3/
-│   ├── dockerfile               # service-cのDockerイメージを作成するためのファイル
-│   └── main.go                  # service-cのアプリケーションコード
+│   ├── dockerfile               # service-3のDockerイメージを作成するためのファイル
+│   └── main.go                  # service-3のアプリケーションコード
 ├── docker-compose.yml           # サービス全体を定義するComposeファイル
-└── README.md                    # プロジェクトの説明
+└── README.md                    
 ```
