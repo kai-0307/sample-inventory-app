@@ -47,13 +47,13 @@ docker-compose ps
 
 ```
 ▼ サービスA
-http://localhost:8080/api/service-a/
+http://localhost:8080/api/service-1/
 
 ▼ サービスB
-http://localhost:8080/api/service-b/
+http://localhost:8080/api/service-2/
 
 ▼ サービスC
-http://localhost:8080/api/service-c/
+http://localhost:8080/api/service-3/
 ```
 
 ## ディレクトリ構成の説明
@@ -62,13 +62,13 @@ http://localhost:8080/api/service-c/
 LOCAL-MICROSERVICE/
 ├── conf/
 │   └── localhost/               # Nginxの設定などが入る（ルーティングやプロキシ設定）
-├── service-a/
+├── service-1/
 │   ├── dockerfile               # service-aのDockerイメージを作成するためのファイル
 │   └── main.go                  # service-aのアプリケーションコード
-├── service-b/
+├── service-2/
 │   ├── dockerfile               # service-bのDockerイメージを作成するためのファイル
 │   └── main.go                  # service-bのアプリケーションコード
-├── service-c/
+├── service-3/
 │   ├── dockerfile               # service-cのDockerイメージを作成するためのファイル
 │   └── main.go                  # service-cのアプリケーションコード
 ├── docker-compose.yml           # サービス全体を定義するComposeファイル
