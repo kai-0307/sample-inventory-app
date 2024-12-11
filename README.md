@@ -30,11 +30,10 @@ docker run -p 8080:8080 service-1
 curl http://localhost:8080
 ```
 
-## Nginx が設定を正しく読み込んでいるか確認
+## コンテナ内で操作を行うコマンド
 
 ```
-docker exec -it local-microservice-nginx-proxy-1 sh
-cat /etc/nginx/vhost.d/localhost
+docker exec -it microservice-architecture-demo sh
 ```
 
 ## サービスが起動しているか確認
@@ -72,5 +71,5 @@ microservice-architecture-demo/
 │   ├── dockerfile               # service-3のDockerイメージを作成するためのファイル
 │   └── main.go                  # service-3のアプリケーションコード
 ├── docker-compose.yml           # サービス全体を定義するComposeファイル
-└── README.md                    
+└── README.md
 ```
