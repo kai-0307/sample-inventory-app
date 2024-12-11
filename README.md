@@ -21,7 +21,7 @@ docker system prune
 ## サービス単体の動作確認
 
 ```
-cd service-a
+cd service-1
 docker build -t service-1 .
 docker run -p 8080:8080 service-1
 ```
