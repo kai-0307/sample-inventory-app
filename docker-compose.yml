@@ -1,8 +1,18 @@
+version: "3"
+
 x-common: &common
   working_dir: /go/src/microservice
   tty: true
   expose:
     - 8080
+  depends_on:
+    - postgres
+  environment:
+    - TZ=Asia/Tokyo
+    - POSTGRES_HOST=postgres
+    - POSTGRES_USER=stockapp
+    - POSTGRES_PASSWORD=stockapp
+    - POSTGRES_DB=stockapp
   command: sh -c "go run main.go"
 
 services:
@@ -18,11 +28,16 @@ services:
       - service-2
       - service-3
 
-  termination:
-    image: containous/whoami
-    platform: linux/amd64 # プラットフォームを指定
+  postgres:
+    image: postgres:15-alpine
     environment:
-      - VIRTUAL_HOST=localhost
+      - POSTGRES_USER=stockapp
+      - POSTGRES_PASSWORD=stockapp
+      - POSTGRES_DB=stockapp
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   service-1:
     <<: *common
@@ -44,3 +59,6 @@ services:
       context: "./service-3"
     volumes:
       - ./service-3:/go/src/microservice
+
+volumes:
+  postgres_data:
