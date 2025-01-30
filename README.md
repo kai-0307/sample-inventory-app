@@ -1,4 +1,4 @@
-# microservice architecture demo
+# microservice architecture demo-app
 
 ## 起動
 
