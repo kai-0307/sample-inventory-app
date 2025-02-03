@@ -31,11 +31,11 @@ func main() {
     // ルーターの設定
     router := mux.NewRouter()
 
-		// サブルーターを作成
+    // サブルーターを作成
     apiRouter := router.PathPrefix("/api/service-1").Subrouter()
 
     // ルーティングの設定
-		apiRouter.HandleFunc("/stocks/{id}", stockHandler.UpdateStock).Methods("PUT")
+    apiRouter.HandleFunc("/stocks/{id}", stockHandler.UpdateStock).Methods("PUT")
     apiRouter.HandleFunc("/stocks/{id}", stockHandler.DeleteStock).Methods("DELETE")
     apiRouter.HandleFunc("/stocks", stockHandler.CreateStock).Methods("POST")
     apiRouter.HandleFunc("/stocks", stockHandler.ListStocks).Methods("GET")
