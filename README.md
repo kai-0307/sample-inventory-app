@@ -74,6 +74,33 @@ microservice-architecture-demo/
 └── README.md
 ```
 
+## service-1 のディレクトリ構成
+
+```
+service-1/
+├── cmd/
+│   └── main.go
+├── internal/
+│   ├── domain/
+│   │   └── models/
+│   │       └── stock.go
+│   ├── usecase/
+│   │   ├── stock_interactor.go
+│   │   └── stock_repository.go
+│   ├── interfaces/
+│   │   ├── handlers/
+│   │   │   └── stock_handler.go
+│   │   └── repositories/
+│   │       └── stock_repository.go
+│   └── infrastructure/
+│       └── database/
+│           └── postgres.go
+├── dockerfile
+├── go.mod
+├── go.sum
+└── main.go
+```
+
 ## 簡易在庫管理システム
 
 マイクロサービスアーキテクチャを用いた簡易的な在庫管理システム

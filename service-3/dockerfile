@@ -6,3 +6,20 @@ FROM golang:1.23.4-alpine
 COPY --from=tzdata /usr/share/zoneinfo /usr/share/zoneinfo
 ENV TZ='Asia/Tokyo'
 ENV LANG='ja_JP.UTF-8'
+ENV GO111MODULE=on
+ENV CGO_ENABLED=1
+
+WORKDIR /go/src/microservice
+
+# 必要なパッケージのインストール
+RUN apk add --no-cache gcc musl-dev curl
+
+# 依存関係のコピーとダウンロード
+COPY go.mod go.sum ./
+RUN go mod download
+
+# ソースコードのコピー
+COPY . .
+
+# アプリケーションのビルドと実行
+CMD ["go", "run", "cmd/main.go"]

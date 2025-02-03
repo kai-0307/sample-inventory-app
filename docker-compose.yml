@@ -11,7 +11,7 @@ x-common: &common
     - POSTGRES_USER=stockapp
     - POSTGRES_PASSWORD=stockapp
     - POSTGRES_DB=stockapp
-  command: sh -c "go run main.go"
+  command: sh -c "go run cmd/main.go"
 
 services:
   nginx-proxy:
@@ -20,11 +20,19 @@ services:
       - "8080:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./conf:/etc/nginx/vhost.d
+      - ./conf:/etc/nginx/vhost.d:ro
+    environment:
+      - DEFAULT_HOST=localhost
     depends_on:
       - service-1
       - service-2
       - service-3
+    networks:
+      app_network:
+        aliases:
+          - service-1
+          - service-2
+          - service-3
 
   postgres:
     image: postgres:15-alpine
@@ -36,6 +44,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - app_network
 
   service-1:
     <<: *common
@@ -43,6 +53,11 @@ services:
       context: "./service-1"
     volumes:
       - ./service-1:/go/src/microservice
+    environment:
+      - VIRTUAL_HOST=localhost
+      - VIRTUAL_PORT=8080
+    networks:
+      - app_network
 
   service-2:
     <<: *common
@@ -50,6 +65,11 @@ services:
       context: "./service-2"
     volumes:
       - ./service-2:/go/src/microservice
+    environment:
+      - VIRTUAL_HOST=localhost
+      - VIRTUAL_PORT=8080
+    networks:
+      - app_network
 
   service-3:
     <<: *common
@@ -57,6 +77,15 @@ services:
       context: "./service-3"
     volumes:
       - ./service-3:/go/src/microservice
+    environment:
+      - VIRTUAL_HOST=localhost
+      - VIRTUAL_PORT=8080
+    networks:
+      - app_network
 
 volumes:
   postgres_data:
+
+networks:
+  app_network:
+    driver: bridge
