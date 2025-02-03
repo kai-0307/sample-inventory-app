@@ -43,9 +43,15 @@ func NewServer() (*Server, error) {
 			"host=%s user=%s password=%s dbname=%s port=5432 sslmode=disable TimeZone=Asia/Tokyo",
 			os.Getenv("POSTGRES_HOST"),
 			os.Getenv("POSTGRES_USER"),
-			os.Getenv("POSTGRES_DB"),
 			os.Getenv("POSTGRES_PASSWORD"),
+			os.Getenv("POSTGRES_DB"),
 	)
+
+	fmt.Printf("POSTGRES_HOST=%s\n", os.Getenv("POSTGRES_HOST"))
+	fmt.Printf("POSTGRES_USER=%s\n", os.Getenv("POSTGRES_USER"))
+	fmt.Printf("POSTGRES_PASSWORD=%s\n", os.Getenv("POSTGRES_PASSWORD"))
+	fmt.Printf("POSTGRES_DB=%s\n", os.Getenv("POSTGRES_DB"))
+
 
 	// データベース接続の試行（リトライ付き）
 	var db *gorm.DB

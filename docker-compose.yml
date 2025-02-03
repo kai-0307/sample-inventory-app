@@ -1,16 +1,16 @@
+version: "3.8" # バージョンが明記されているとより明確です
+
 x-common: &common
   working_dir: /go/src/microservice
   tty: true
   expose:
     - 8080
-  depends_on:
-    - postgres
   environment:
-    - TZ=Asia/Tokyo
-    - POSTGRES_HOST=postgres
-    - POSTGRES_USER=stockapp
-    - POSTGRES_PASSWORD=stockapp
-    - POSTGRES_DB=stockapp
+    TZ: Asia/Tokyo
+    POSTGRES_HOST: postgres
+    POSTGRES_USER: stockapp
+    POSTGRES_PASSWORD: stockapp
+    POSTGRES_DB: stockapp
   command: sh -c "go run cmd/main.go"
 
 services:
@@ -22,11 +22,7 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./conf:/etc/nginx/vhost.d:ro
     environment:
-      - DEFAULT_HOST=localhost
-    depends_on:
-      - service-1
-      - service-2
-      - service-3
+      DEFAULT_HOST: localhost
     networks:
       app_network:
         aliases:
@@ -37,9 +33,9 @@ services:
   postgres:
     image: postgres:15-alpine
     environment:
-      - POSTGRES_USER=stockapp
-      - POSTGRES_PASSWORD=stockapp
-      - POSTGRES_DB=stockapp
+      POSTGRES_USER: stockapp
+      POSTGRES_PASSWORD: stockapp
+      POSTGRES_DB: stockapp
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -54,8 +50,10 @@ services:
     volumes:
       - ./service-1:/go/src/microservice
     environment:
-      - VIRTUAL_HOST=localhost
-      - VIRTUAL_PORT=8080
+      VIRTUAL_HOST: localhost
+      VIRTUAL_PORT: 8080
+    depends_on:
+      - postgres
     networks:
       - app_network
 
@@ -66,8 +64,14 @@ services:
     volumes:
       - ./service-2:/go/src/microservice
     environment:
-      - VIRTUAL_HOST=localhost
-      - VIRTUAL_PORT=8080
+      VIRTUAL_HOST: localhost
+      VIRTUAL_PORT: 8080
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: stockapp
+      POSTGRES_PASSWORD: stockapp
+      POSTGRES_DB: stockapp
+    depends_on:
+      - postgres
     networks:
       - app_network
 
@@ -78,8 +82,14 @@ services:
     volumes:
       - ./service-3:/go/src/microservice
     environment:
-      - VIRTUAL_HOST=localhost
-      - VIRTUAL_PORT=8080
+      VIRTUAL_HOST: localhost
+      VIRTUAL_PORT: 8080
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: stockapp
+      POSTGRES_PASSWORD: stockapp
+      POSTGRES_DB: stockapp
+    depends_on:
+      - postgres
     networks:
       - app_network
 

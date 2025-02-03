@@ -60,6 +60,12 @@ func NewServer() (*Server, error) {
         return nil, err
     }
 
+		fmt.Printf("POSTGRES_HOST=%s\n", os.Getenv("POSTGRES_HOST"))
+		fmt.Printf("POSTGRES_USER=%s\n", os.Getenv("POSTGRES_USER"))
+		fmt.Printf("POSTGRES_PASSWORD=%s\n", os.Getenv("POSTGRES_PASSWORD"))
+		fmt.Printf("POSTGRES_DB=%s\n", os.Getenv("POSTGRES_DB"))
+
+
     // マイグレーション実行
     db.AutoMigrate(&Alert{}, &AlertConfig{})
 
