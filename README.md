@@ -3,7 +3,7 @@
 ## 起動
 
 ```
-docker-compose up -d
+docker compose up -d
 ```
 
 ## 停止
