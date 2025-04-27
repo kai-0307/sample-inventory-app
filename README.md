@@ -39,7 +39,7 @@ docker exec -it microservice-architecture-demo sh
 ## サービスが起動しているか確認
 
 ```
-docker-compose ps
+docker compose ps
 ```
 
 ## アクセス
