@@ -17,7 +17,8 @@ func NewAlertConfigRepository(db *gorm.DB) *AlertConfigRepository {
 
 func (r *AlertConfigRepository) GetByStockID(stockID string) (*entities.AlertConfig, error) {
 	var model AlertConfigModel
-	if err := r.db.First(&model, "stock_id = ?", stockID).Error; err != nil {
+
+	if err := r.db.Where("stock_id = ?", stockID).First(&model).Error; err != nil {
 		return nil, err
 	}
 
@@ -38,20 +39,20 @@ func (r *AlertConfigRepository) GetStockReportData() ([]entities.StockReport, er
 	var reports []entities.StockReport
 
 	rows, err := r.db.Raw(`
-		SELECT
-			ac.stock_id,
-			ac.min_quantity,
-			ac.max_quantity,
-			COUNT(a.id) as alert_count,
-			MAX(a.created_at) as last_alert
-		FROM
-			alert_configs ac
-			LEFT JOIN alerts a ON ac.stock_id = a.stock_id
-		WHERE
-			ac.is_active = true
-		GROUP BY
-			ac.stock_id, ac.min_quantity, ac.max_quantity
-	`).Rows()
+      SELECT
+          acm.stock_id,
+          acm.min_quantity,
+          acm.max_quantity,
+          COUNT(am.id) as alert_count,
+          MAX(am.created_at) as last_alert
+      FROM
+          alert_config_models acm
+          LEFT JOIN alert_models am ON acm.stock_id = am.stock_id
+      WHERE
+          acm.is_active = true
+      GROUP BY
+          acm.stock_id, acm.min_quantity, acm.max_quantity
+  `).Rows()
 
 	if err != nil {
 		return nil, err

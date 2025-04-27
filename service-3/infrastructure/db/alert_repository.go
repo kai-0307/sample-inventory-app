@@ -17,11 +17,11 @@ func NewAlertRepository(db *gorm.DB) *AlertRepository {
 
 func (r *AlertRepository) GetByID(id string) (*entities.Alert, error) {
 	var model AlertModel
-	if err := r.db.First(&model, "id = ?", id).Error; err != nil {
+
+	if err := r.db.Where("id = ?", id).First(&model).Error; err != nil {
 		return nil, err
 	}
 
-	// モデルからエンティティへマッピング
 	return mapAlertModelToEntity(&model), nil
 }
 
